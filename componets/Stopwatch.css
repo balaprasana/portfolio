@@ -1,0 +1,182 @@
+.stopwatch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.dial {
+  width: 250px;
+  height: 250px;
+  border: 3px solid #333;
+  border-radius: 50%;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* --- New Styles for Clock Indices --- */
+
+/* Base style for index lines */
+.dial::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  /* No background, just for positioning the lines/numbers */
+}
+
+/* Creating the hour/minute index lines using pseudo-elements */
+.dial::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  /*
+    Conic gradient creates the tick marks.
+    Every 6 degrees (60 marks in total for seconds/minutes) gets a small line.
+    Every 30 degrees (12 marks in total for main hours/minutes) gets a slightly bolder line.
+    This simulates the tick marks of a standard clock/stopwatch face.
+  */
+  background: conic-gradient(
+    from 0deg,
+    #ccc 1deg, /* Small tick mark color */
+    transparent 1deg,
+    transparent 5.5deg,
+    #999 5.5deg, /* Bolder tick mark color */
+    transparent 6.5deg,
+    transparent 29.5deg,
+    #999 29.5deg, /* Bolder tick mark color */
+    transparent 30.5deg,
+    transparent 59.5deg
+  );
+  border-radius: 50%;
+  /* Ensure the hands stay on top */
+  z-index: 1;
+}
+
+.index {
+  position: absolute;
+  /* Center the index text */
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  /* Hands should be above the indices */
+  z-index: 2; 
+  /* Adjust based on the dial size (250px / 2 = 125px radius) */
+  transform: translate(-50%, -50%); 
+}
+
+/* Positioning specific index numbers (5, 10, 15, etc.) */
+/* 0 / 60 seconds (Top) */
+.index.index-60 { top: 10px; left: 50%; } 
+/* 5 seconds */
+.index.index-05 { top: 20px; left: 81%; }
+/* 10 seconds */
+.index.index-10 { top: 50%; left: 93%; }
+/* 15 seconds (Right) */
+.index.index-15 { top: 81%; left: 81%; }
+/* 20 seconds */
+.index.index-20 { top: 90%; left: 50%; }
+/* 25 seconds */
+.index.index-25 { top: 81%; left: 19%; }
+/* 30 seconds (Bottom) */
+.index.index-30 { top: 50%; left: 7%; }
+/* 35 seconds */
+.index.index-35 { top: 20px; left: 19%; }
+/* 40 seconds */
+/* Removed specific styles for 40, 45, 50, 55 to keep it simpler, focusing on main quarters */
+/* You could add more indices with precise trigonometric calculations if needed. */
+
+/* --- Existing Styles (Ensure these are below the new index styles) --- */
+.hand {
+  width: 3px;
+  height: 100px;
+  background: black;
+  position: absolute;
+  top: 25px; /* Adjust top position relative to the dial */
+  left: 50%;
+  transform-origin: bottom center;
+  transition: transform 0.05s linear;
+  border-radius: 2px;
+  /* Hands should be highest */
+  z-index: 3; 
+}
+
+.hand.red {
+  background: red;
+  height: 90px;
+}
+
+.hand.blue {
+  background: blue;
+  height: 90px;
+}
+
+.hand.black {
+  background: black;
+  height: 110px;
+}
+
+.time-display {
+  font-size: 40px;
+  font-weight: bold;
+  color: red;
+  margin: 25px 0;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.controls button {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s;
+}
+
+/* Button colors */
+.controls button:nth-child(1) {
+  background-color: #28a745; /* Green - Start */
+}
+
+.controls button:nth-child(2) {
+  background-color: #dc3545; /* Red - Stop */
+}
+
+.controls button:nth-child(3) {
+  background-color: #007bff; /* Blue - Reset */
+}
+
+/* Hover effects */
+.controls button:nth-child(1):hover {
+  background-color: #218838;
+}
+
+.controls button:nth-child(2):hover {
+  background-color: #c82333;
+}
+
+.controls button:nth-child(3):hover {
+  background-color: #0069d9;
+}
